@@ -1,0 +1,18 @@
+#import libraries
+library(rvest)
+library(dplyr)
+library(robotstxt)
+path = paths_allowed("https://companiesmarketcap.com/")
+link <- 'https://companiesmarketcap.com/'
+web <- read_html(link)
+rank <- web %>% html_nodes(".rank-td") %>% html_text()
+View(rank)
+companyname <- web %>% html_nodes(".company-name")%>% html_text()
+View(companyname)
+country <- web %>% html_nodes(".flag+ .responsive-hidden")%>% html_text()
+View(country)
+marketcap <- web %>% html_nodes(".name-td+ .td-right")%>% html_text()
+View(marketcap)
+company.details <- data.frame(rank,companyname,country,marketcap)
+View(company.details)
+write.csv(company.details,"my_company details.csv")
